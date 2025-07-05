@@ -14,6 +14,28 @@
       scroll-behavior: smooth;
     }
 
+    .animated-bg {
+      position: fixed;
+      width: 200%;
+      height: 200%;
+      top: -50%;
+      left: -50%;
+      background: radial-gradient(circle at center, #392667 0%, #120722 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 30s ease infinite;
+      z-index: -2;
+      pointer-events: none;
+      opacity: 0.8;
+    }
+
+    @keyframes gradientShift {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(10%, -10%); }
+      50% { transform: translate(-10%, 10%); }
+      75% { transform: translate(5%, -5%); }
+      100% { transform: translate(0, 0); }
+    }
+
     a {
       color: #9a6aff;
       text-decoration: none;
@@ -38,11 +60,34 @@
       color: #fff;
       cursor: pointer;
       transition: transform 0.2s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
     }
 
     .btn:hover {
       transform: scale(1.05);
       box-shadow: 0 0 20px #a676ff;
+    }
+
+    .btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -75%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(120deg, rgba(255,255,255,0.3), rgba(255,255,255,0));
+      transform: skewX(-20deg);
+    }
+
+    .btn:hover::before {
+      animation: shine 1s ease;
+    }
+
+    @keyframes shine {
+      to {
+        left: 125%;
+      }
     }
 
     .hero {
@@ -65,6 +110,15 @@
       position: relative;
       z-index: 2;
       text-shadow: 2px 2px 5px #000;
+    }
+
+    .hero-content h1 {
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { text-shadow: 0 0 10px #c79bff; }
+      50% { text-shadow: 0 0 20px #ffffff; }
     }
 
     .hero-logo {
@@ -103,11 +157,30 @@
       width: 280px;
       box-shadow: 0 0 15px rgba(154, 106, 255, 0.2);
       transition: transform 0.3s;
+      position: relative;
+      overflow: hidden;
     }
 
     .feature:hover {
       transform: translateY(-10px);
       box-shadow: 0 0 25px rgba(154, 106, 255, 0.3);
+    }
+
+    .feature::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -150%;
+      width: 150%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.05), transparent);
+      transform: skewX(-25deg);
+      animation: shimmer 5s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { left: -150%; }
+      100% { left: 150%; }
     }
 
     footer {
@@ -117,9 +190,39 @@
       font-size: 0.9em;
       color: #aaa;
     }
+
+    @keyframes backgroundGlow {
+      0% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(-30px); }
+      100% { transform: translateX(-50%) translateY(0); }
+    }
+
+    body > div {
+      animation: backgroundGlow 8s ease-in-out infinite;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(white 1px, transparent 1px);
+      background-size: 50px 50px;
+      opacity: 0.03;
+      animation: sparkle 60s linear infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes sparkle {
+      0% { background-position: 0 0; }
+      100% { background-position: 1000px 1000px; }
+    }
   </style>
 </head>
 <body>
+  <div class="animated-bg"></div>
 
   <div style="
     position: fixed;
@@ -136,7 +239,7 @@
 
   <section class="hero">
     <div class="hero-content">
-      <img src="https://i.imgur.com/uRpVTcm.png" alt="OpenTale Logo" class="" />
+      <img src="https://i.imgur.com/uRpVTcm.png" alt="OpenTale Logo" class="hero-logo" />
       <h1>Welcome to <span style="color:#c79bff;">OpenTale</span></h1>
       <p>An future open-source sandbox adventure inspired by Hytale.</p>
       <div class="cta-buttons">
@@ -145,8 +248,8 @@
       </div>
     </div>
   </section>
-  
-    <section style="background: #1a0933;">
+
+  <section style="background: #1a0933;">
     <h2>We need developers!</h2>
     <p style="max-width: 650px; margin: 0 auto 30px;">
       Are you a game developer, artist, modder or just love Hytale’s vision? Join us!
@@ -176,7 +279,7 @@
       </div>
       <div class="feature">
         <h3>⚡ Powered by  community</h3>
-        <p>Powered by the passionate (and impatient) Hytale community!</h3>
+        <p>Powered by the passionate (and impatient) Hytale community!</p>
       </div>
       <div class="feature">
         <h3>🧑‍💻 Open Source</h3>
@@ -189,6 +292,5 @@
     &copy; 2025 OpenTale Project. Not affiliated with Hypixel Studios or Hytale.<br>
     Built with ❤️ by the community.
   </footer>
-
 </body>
 </html>
